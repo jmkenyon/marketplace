@@ -38,7 +38,7 @@ const navbarItems = [
   { href: "/", children: "Home" },
   { href: "/sobre", children: "Sobre Nós" },
   // {href: '/funcionalidades', children: "Funcionalidades"},
-  { href: "/planos", children: "Planos" },
+  // { href: "/planos", children: "Planos" },
   { href: "/contato", children: "Contato" },
 ];
 
