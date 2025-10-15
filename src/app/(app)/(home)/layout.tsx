@@ -5,6 +5,7 @@ import Footer from "./footer";
 import Navbar from "./navbar";
 import { SearchFilters } from "./search-filters";
 import { Category } from "@/payload-types";
+import { CustomCategory } from "./types";
 
 interface Props {
   children: React.ReactNode;
@@ -24,16 +25,24 @@ const layout = async ({ children }: Props) => {
         exists: false,
       },
     },
+    sort: "name",
   });
 
-  const formattedData = data.docs.map((doc) => ({
+  const formattedData: CustomCategory[] = data.docs
+  .map((doc) => ({
     ...doc,
-    subcategories: (doc.subcategories?.docs ?? []).map((doc) => ({
-      // Depth: 1 = we are confident this is a Category
-      ...(doc as Category), 
-      subcategories: undefined, // Avoid nesting subcategories
-    }))
-  }));
+    subcategories: (doc.subcategories?.docs ?? []).map((sub) => ({
+      ...(sub as Category),
+      subcategories: undefined,
+    })),
+  }))
+  .sort((a, b) => {
+    if (a.name.toLowerCase() === "todos") return -1;      // "Todos" first
+    if (b.name.toLowerCase() === "todos") return 1;
+    if (a.name.toLowerCase() === "outros") return 1;      // "Outros" last
+    if (b.name.toLowerCase() === "outros") return -1;
+    return a.name.localeCompare(b.name);                  // alphabetical in-between
+  });
 
 
 
