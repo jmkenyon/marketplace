@@ -81,7 +81,7 @@ const Navbar = () => {
              hover:bg-green-400 transition-colors text-lg
              "
         >
-          <Link href="/entrar">Entrar</Link>
+          <Link prefetch href="/entrar">Entrar</Link>
         </Button>
         <Button
           asChild
@@ -91,7 +91,7 @@ const Navbar = () => {
              hover:bg-green-400 hover:text-black transition-colors text-lg
              "
         >
-          <Link href="/cadastrar-se">Comece a vender</Link>
+          <Link prefetch href="/cadastrar-se">Comece a vender</Link>
         </Button>
       </div>
 

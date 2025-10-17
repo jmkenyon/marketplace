@@ -7,7 +7,7 @@ export const categorierRouter = createTRPCRouter({
     getMany: baseProcedure.query(async ({ctx}) => {
         
 
-          const data = await ctx.payload.find({
+          const data = await ctx.db.find({
             collection: "categories",
             depth: 1, // Populate categories
             pagination: false,
