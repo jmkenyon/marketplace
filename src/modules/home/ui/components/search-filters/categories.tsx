@@ -63,7 +63,7 @@ export const Categories = ({ data }: Props) => {
     return () => resizeObserver.disconnect();
   }, [data.length]);
 
-  console.log(data);
+
   return (
     <div className="relative w-full">
         <CategoriesSidebar open={isSidebarOpen} onOpenChange={setIsSidebarOpen}/>

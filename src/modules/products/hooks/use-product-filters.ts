@@ -1,12 +1,25 @@
-import { parseAsString, useQueryStates } from "nuqs";
+import { useQueryStates, parseAsArrayOf, parseAsString, parseAsStringLiteral } from "nuqs";
+
+const sortValues = ["selecionado", "em alta", "novo"] as const;
+
+
+const params = {
+  sort: parseAsStringLiteral(sortValues).withDefault("selecionado"),
+  minPrice: parseAsString.withOptions({
+    clearOnDefault: true,
+  })
+  .withDefault(""),
+  maxPrice: parseAsString.withOptions({
+    clearOnDefault: true,
+  })
+  .withDefault(""),
+  tags: parseAsArrayOf(parseAsString).withOptions({
+    clearOnDefault: true,
+  })
+  .withDefault([]),
+};
 
 export const useProductFilters = () => {
-  return useQueryStates({
-    minPrice: parseAsString.withOptions({
-      clearOnDefault: true,
-    }),
-    maxPrice: parseAsString.withOptions({
-      clearOnDefault: true,
-    }),
-  });
+  return useQueryStates(params);
 };
+
