@@ -107,7 +107,7 @@ const seed = async () => {
         data: {
             name: 'admin',
             slug: 'admin',
-            stripAccountId: 'test-account-id-admin'
+            stripeAccountId: 'test-account-id-admin'
         }
     })
 

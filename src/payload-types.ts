@@ -73,6 +73,7 @@ export interface Config {
     products: Product;
     tags: Tag;
     tenants: Tenant;
+    orders: Order;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -89,6 +90,7 @@ export interface Config {
     products: ProductsSelect<false> | ProductsSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
     tenants: TenantsSelect<false> | TenantsSelect<true>;
+    orders: OrdersSelect<false> | OrdersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -172,7 +174,7 @@ export interface Tenant {
    */
   slug: string;
   image?: (string | null) | Media;
-  stripAccountId: string;
+  stripeAccountId: string;
   /**
    * Você não pode criar produtos até enviar seus dados do Stripe.
    */
@@ -251,6 +253,19 @@ export interface Tag {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders".
+ */
+export interface Order {
+  id: string;
+  name: string;
+  user: string | User;
+  product: string | User;
+  stripeCheckoutSessionId: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -279,6 +294,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'tenants';
         value: string | Tenant;
+      } | null)
+    | ({
+        relationTo: 'orders';
+        value: string | Order;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -418,8 +437,20 @@ export interface TenantsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   image?: T;
-  stripAccountId?: T;
+  stripeAccountId?: T;
   stripeDetailsSubmiited?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders_select".
+ */
+export interface OrdersSelect<T extends boolean = true> {
+  name?: T;
+  user?: T;
+  product?: T;
+  stripeCheckoutSessionId?: T;
   updatedAt?: T;
   createdAt?: T;
 }
