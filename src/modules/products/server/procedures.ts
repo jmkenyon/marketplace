@@ -4,6 +4,7 @@ import type { Sort, Where } from "payload";
 import z from "zod";
 import { sortValues } from "../search-params";
 import { DEFAULT_LIMIT } from "@/constants";
+import { headers as getHeaders } from "next/headers";
 
 export const productsRouter = createTRPCRouter({
   getOne: baseProcedure
@@ -13,13 +14,42 @@ export const productsRouter = createTRPCRouter({
       })
     )
     .query(async ({ ctx, input }) => {
+      const headers = await getHeaders();
+      const session = await ctx.db.auth({ headers });
+
       const product = await ctx.db.findByID({
         collection: "products",
         id: input.id,
         depth: 2,
-      })
+      });
+
+      let isPurchased = false;
+      if (session.user) {
+        const orders = await ctx.db.find({
+          collection: "orders",
+          pagination: false,
+          limit: 1,
+          where: {
+            and: [
+              {
+                product: {
+                  equals: input.id,
+                },
+              },
+              {
+                user: {
+                  equals: session.user.id,
+                },
+              },
+            ],
+          },
+        });
+        isPurchased = orders.totalDocs > 0;
+      }
+
       return {
         ...product,
+        isPurchased,
         image: product.image as Media | null,
         cover: product.cover as Media | null, //if want two seperate images, one for cover and one for home page
         tenant: product.tenant as Tenant & { image: Media | null },
@@ -43,16 +73,15 @@ export const productsRouter = createTRPCRouter({
       let sort: Sort = "-createdAt";
 
       if (input.sort === "selecionado") {
-        sort ="name"
+        sort = "name";
       }
 
-
       if (input.sort === "em alta") {
-        sort ="-createdAt"
+        sort = "-createdAt";
       }
 
       if (input.sort === "novo") {
-        sort ="createdAt"
+        sort = "createdAt";
       }
 
       if (input.minPrice && input.maxPrice) {
@@ -134,7 +163,7 @@ export const productsRouter = createTRPCRouter({
         limit: input.limit,
       });
 
-      console.log(JSON.stringify(data.docs, null, 2))
+      console.log(JSON.stringify(data.docs, null, 2));
 
       return {
         ...data,
@@ -142,8 +171,7 @@ export const productsRouter = createTRPCRouter({
           ...doc,
           image: doc.image as Media | null,
           tenant: doc.tenant as Tenant & { image: Media | null },
-
-        }))
-      }
+        })),
+      };
     }),
 });

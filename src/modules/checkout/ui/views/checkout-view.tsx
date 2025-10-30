@@ -12,7 +12,7 @@ import { CheckoutSidebar } from "../components/checkout-sidebar";
 import { InboxIcon, LoaderIcon } from "lucide-react";
 import { useCheckoutStates } from "../../hooks/use-checkout-states";
 import { useRouter } from "next/navigation";
-import { set } from "date-fns";
+
 
 interface CheckoutViewProps {
   tenantSlug: string;
@@ -49,9 +49,9 @@ export const CheckoutView = ({ tenantSlug }: CheckoutViewProps) => {
 
   useEffect(() => {
     if (states.success) {
-      setStates({ success: false, cancel: false });
+      // setStates({ success: false, cancel: false });
       clearCart();
-      router.push("/produtos");
+      // router.push("/produtos");
     }
   }, [states.success, clearCart, router, setStates]);
 

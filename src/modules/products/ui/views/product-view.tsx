@@ -15,11 +15,15 @@ import dynamic from "next/dynamic";
 
 const CartButton = dynamic(
   () => import("../components/cart-button").then((mod) => mod.CartButton),
-  { 
+  {
     ssr: false,
-    loading: () => <Button className="flex-1 bg-green-400" disabled>Carregando...</Button>,
+    loading: () => (
+      <Button className="flex-1 bg-green-400" disabled>
+        Carregando...
+      </Button>
+    ),
   }
-)
+);
 
 interface ProductViewProps {
   productId: string;
@@ -104,9 +108,11 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
               <div className="flex flex-col gap-4 p-6 border-b">
                 <div className="flex flex-row items-center gap-2">
                   <CartButton
-                      productId={data.id}
-                      tenantSlug={tenantSlug}
-                    />
+                    isPurchased={data.isPurchased}
+                    productId={data.id}
+                    tenantSlug={tenantSlug}
+                  />
+
                   <Button
                     className="size-12"
                     variant="elevated"
@@ -138,13 +144,8 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                       <div className="font-medium">
                         {star} {star === 1 ? "strela" : "estrelas"}
                       </div>
-                      <Progress 
-                        value={5}
-                        className="h-[1lh]"
-                      />
-                      <div className="font-medium">
-                        {5}%
-                      </div>
+                      <Progress value={5} className="h-[1lh]" />
+                      <div className="font-medium">{5}%</div>
                     </Fragment>
                   ))}
                 </div>
