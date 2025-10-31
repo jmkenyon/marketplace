@@ -3,8 +3,60 @@ import { createTRPCRouter, protectedProcedure } from "@/trpc/init";
 
 import z from "zod";
 import { DEFAULT_LIMIT } from "@/constants";
+import { TRPCError } from "@trpc/server";
 
 export const libraryRouter = createTRPCRouter({
+  getOne: protectedProcedure
+    .input(
+      z.object({
+        productId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const ordersData = await ctx.db.find({
+        collection: "orders",
+        limit: 1,
+        pagination: false,
+        where: {
+          and: [
+            {
+              product: {
+                equals: input.productId,
+              },
+            },
+            {
+              user: {
+                equals: ctx.session.user.id,
+              },
+            },
+          ],
+        },
+      });
+
+      const order = ordersData.docs[0];
+
+      if (!order) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Order not found for this product and user",
+        });
+      }
+
+      const product = await ctx.db.findByID({
+        collection: "products",
+
+        id: input.productId,
+      });
+
+      if (!product) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Product not found",
+        });
+      }
+
+      return product;
+    }),
   getMany: protectedProcedure
     .input(
       z.object({
@@ -29,7 +81,7 @@ export const libraryRouter = createTRPCRouter({
 
       const productsData = await ctx.db.find({
         collection: "products",
-        pagination: false, 
+        pagination: false,
         where: {
           id: {
             in: productIds,

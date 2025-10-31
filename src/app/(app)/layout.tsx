@@ -29,7 +29,7 @@ export default function RootLayout({
             <Toaster />
           </TRPCReactProvider>
         </NuqsAdapter>
-      </body>
+      </body>e()
     </html>
   );
 }
