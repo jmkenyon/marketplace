@@ -24,12 +24,11 @@ export default function RootLayout({
       <body className={`${dmSans.className} antialiased`}>
         <NuqsAdapter>
           <TRPCReactProvider>
-            {" "}
             {children}
             <Toaster />
           </TRPCReactProvider>
         </NuqsAdapter>
-      </body>e()
+      </body>
     </html>
   );
 }
