@@ -1,57 +1,95 @@
+import { isSuperAdmin } from "@/lib/access";
+import { Tenant } from "@/payload-types";
 import type { CollectionConfig } from "payload";
 
 export const Products: CollectionConfig = {
   slug: "products",
+  labels: {
+    singular: "Produto",
+    plural: "Produtos",
+  },
+  access: {
+    create: ({ req }) => {
+      if (isSuperAdmin(req.user)) return true;
+
+      const tenant = req.user?.tenants?.[0]?.tenant as Tenant;
+      return Boolean(tenant?.stripeDetailsSubmitted);
+    },
+  },
   admin: {
     useAsTitle: "name",
   },
   fields: [
     {
       name: "name",
+      label: "Nome do Produto",
       type: "text",
       required: true,
     },
     {
       name: "price",
+      label: "Preço do Produto",
       type: "number",
       required: true,
       admin: {
         description: "Preço em reais (R$)",
-      }
+      },
     },
     {
       name: "description",
+      label: "Descrição do Produto",
       type: "text",
     },
     {
       name: "category",
+      label: "Categoria do Produto",
       type: "relationship",
       relationTo: "categories",
       hasMany: false,
     },
     {
       name: "tags",
+      label: "Tags do Produto",
       type: "relationship",
       relationTo: "tags",
       hasMany: true,
     },
 
     {
-        name: "image",
-        type: "upload",
-        relationTo: "media",
+      name: "image",
+      label: "Imagem do Produto",
+      admin: {
+        description:
+          "Imagem do produto exibida na lista e na página do produto. Recomendado: formato quadrado (1:1), ex: 800x800px ou 1600x1600px",
+      },
+      type: "upload",
+      relationTo: "media",
     },
     {
-        name: "cover",
-        type: "upload",
-        relationTo: "media",
+      name: "cover",
+      label: "Imagem de Capa do Produto",
+      admin: {
+        description:
+          "Imagem maior exibida na página do produto. Recomendada dimensão: 1920x480px (proporção 4:1).",
+      },
+      type: "upload",
+      relationTo: "media",
     },
     {
-        name: "refundPolicy",
-        type: "select",
-        options: ["No Refunds", "30 dias", "60 dias"],
-        defaultValue: "30 dias",
+      name: "refundPolicy",
+      label: "Política de Reembolso",
+      type: "select",
+      options: ["No Refunds", "30 dias", "60 dias"],
+      defaultValue: "30 dias",
     },
-
+    {
+      name: "content",
+      label: "Conteúdo do Produto",
+      type: "textarea",
+      admin: {
+        description:
+          "Conteúdo exclusivo para clientes que compraram. Adicione documentação do produto, arquivos, guias e materiais bônus. Suporte a Markdown.",
+      },
+    },
   ],
 };

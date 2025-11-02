@@ -5,6 +5,8 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import path from "path";
 import { buildConfig } from "payload";
 import { multiTenantPlugin } from "@payloadcms/plugin-multi-tenant";
+import {pt } from "@payloadcms/translations/languages/pt";
+
 
 import { fileURLToPath } from "url";
 import sharp from "sharp";
@@ -17,6 +19,7 @@ import { Tags } from "./collections/Tags";
 import { Tenants } from "./collections/Tenants";
 import { Orders } from "./collections/Orders";
 import { Reviews } from "./collections/Reviews";
+import { isSuperAdmin } from "./lib/access";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -28,7 +31,16 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Categories, Products, Tags, Tenants, Orders, Reviews],
+  collections: [
+    Users,
+    Media,
+    Categories,
+    Products,
+    Tags,
+    Tenants,
+    Orders,
+    Reviews,
+  ],
 
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
@@ -48,8 +60,11 @@ export default buildConfig({
       tenantsArrayField: {
         includeDefaultField: false,
       },
-      userHasAccessToAllTenants: (user) => Boolean(user?.roles?.includes('super-admin'))
+      userHasAccessToAllTenants: (user) => isSuperAdmin(user),
     }),
     // storage-adapter-placeholder
   ],
+  i18n: {
+    supportedLanguages: {pt},
+  },
 });

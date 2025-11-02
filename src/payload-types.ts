@@ -176,11 +176,14 @@ export interface Tenant {
    */
   slug: string;
   image?: (string | null) | Media;
+  /**
+   * ID da conta Stripe associada a esta loja.
+   */
   stripeAccountId: string;
   /**
    * Você não pode criar produtos até enviar seus dados do Stripe.
    */
-  stripeDetailsSubmiited?: boolean | null;
+  stripeDetailsSubmitted?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -236,9 +239,19 @@ export interface Product {
   description?: string | null;
   category?: (string | null) | Category;
   tags?: (string | Tag)[] | null;
+  /**
+   * Imagem do produto exibida na lista e na página do produto. Recomendado: formato quadrado (1:1), ex: 800x800px ou 1600x1600px
+   */
   image?: (string | null) | Media;
+  /**
+   * Imagem maior exibida na página do produto. Recomendada dimensão: 1920x480px (proporção 4:1).
+   */
   cover?: (string | null) | Media;
   refundPolicy?: ('No Refunds' | '30 dias' | '60 dias') | null;
+  /**
+   * Conteúdo exclusivo para clientes que compraram. Adicione documentação do produto, arquivos, guias e materiais bônus. Suporte a Markdown.
+   */
+  content?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -262,6 +275,9 @@ export interface Order {
   name: string;
   user: string | User;
   product: string | Product;
+  /**
+   * ID da sessão de checkout do Stripe associada a este pedido.
+   */
   stripeCheckoutSessionId: string;
   updatedAt: string;
   createdAt: string;
@@ -435,6 +451,7 @@ export interface ProductsSelect<T extends boolean = true> {
   image?: T;
   cover?: T;
   refundPolicy?: T;
+  content?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -457,7 +474,7 @@ export interface TenantsSelect<T extends boolean = true> {
   slug?: T;
   image?: T;
   stripeAccountId?: T;
-  stripeDetailsSubmiited?: T;
+  stripeDetailsSubmitted?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -43,7 +43,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
   return (
     <div className="px-4 lg:px-12 py-10">
       <div className="border rounded-sm bg-white overflow-hidden">
-        <div className="relative aspect-[3.9] border-b">
+        <div className="relative aspect-[4] border-b">
           <Image
             src={data.image?.url || "/placeholder-image.png"} // change to data.cover?.url if want two images, one cover + one product
             alt={data.name}
@@ -161,7 +161,7 @@ export const ProductView = ({ productId, tenantSlug }: ProductViewProps) => {
                   {[5, 4, 3, 2, 1].map((star) => (
                     <Fragment key={star}>
                       <div className="font-medium">
-                        {star} {star === 1 ? "strela" : "estrelas"}
+                        {star} {star === 1 ? "estrela" : "estrelas"}
                       </div>
                       <Progress value={data.ratingDistribution[star]} className="h-[1lh]" />
                       <div className="font-medium">{data.ratingDistribution[star]}%</div>
