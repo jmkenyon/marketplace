@@ -41,5 +41,13 @@ export const Orders: CollectionConfig = {
       },
 
     },
+    {
+      name: "stripeAccountId",
+      type: "text",
+      admin: {
+        description: "ID da conta Stripe associada a este pedido.",
+      },
+
+    },
   ],
 };

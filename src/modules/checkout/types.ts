@@ -1,6 +1,6 @@
 import type Stripe from "stripe";
 
-export type ProudctMetadata = {
+export type ProductMetadata = {
     stripeAccountId: string;
     id: string;
     price: number;
@@ -13,7 +13,7 @@ export type CheckoutSessionMetadata = {
 export type ExpandedLineItem = Stripe.LineItem & {
     price: Stripe.Price & {
         product: Stripe.Product & {
-            metadata: ProudctMetadata;
+            metadata: ProductMetadata;
         };
     };
 };
