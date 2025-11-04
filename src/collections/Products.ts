@@ -1,5 +1,6 @@
 import { isSuperAdmin } from "@/lib/access";
 import { Tenant } from "@/payload-types";
+
 import type { CollectionConfig } from "payload";
 
 export const Products: CollectionConfig = {
@@ -15,6 +16,8 @@ export const Products: CollectionConfig = {
       const tenant = req.user?.tenants?.[0]?.tenant as Tenant;
       return Boolean(tenant?.stripeDetailsSubmitted);
     },
+
+    delete: ({ req }) => isSuperAdmin(req.user),
   },
   admin: {
     useAsTitle: "name",
@@ -28,6 +31,11 @@ export const Products: CollectionConfig = {
       required: true,
     },
     {
+      name: "description",
+      label: "Descrição do Produto",
+      type: "richText",
+    },
+    {
       name: "price",
       label: "Preço do Produto",
       type: "number",
@@ -36,11 +44,7 @@ export const Products: CollectionConfig = {
         description: "Preço em reais (R$)",
       },
     },
-    {
-      name: "description",
-      label: "Descrição do Produto",
-      type: "text",
-    },
+
     {
       name: "category",
       label: "Categoria do Produto",
@@ -86,10 +90,31 @@ export const Products: CollectionConfig = {
     {
       name: "content",
       label: "Conteúdo do Produto",
-      type: "textarea",
+      type: "richText",
+
       admin: {
         description:
           "Conteúdo exclusivo para clientes que compraram. Adicione documentação do produto, arquivos, guias e materiais bônus. Suporte a Markdown.",
+      },
+    },
+    {
+      name: "isArchived",
+      label: "Arquivar Produto",
+      defaultValue: false,
+      type: "checkbox",
+      admin: {
+        description:
+          "Arquive produtos que não estão mais disponíveis para venda. Produtos arquivados não aparecem na loja, mas permanecem acessíveis para clientes existentes.",
+      },
+    },
+    {
+      name: "isPrivate",
+      label: "Produto Privado",
+      defaultValue: false,
+      type: "checkbox",
+      admin: {
+        description:
+          "Se marcado, este produto não será exibido na vitrine pública.",
       },
     },
   ],

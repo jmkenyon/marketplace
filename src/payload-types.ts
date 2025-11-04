@@ -234,11 +234,25 @@ export interface Product {
   id: string;
   tenant?: (string | null) | Tenant;
   name: string;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   /**
    * Preço em reais (R$)
    */
   price: number;
-  description?: string | null;
   category?: (string | null) | Category;
   tags?: (string | Tag)[] | null;
   /**
@@ -253,7 +267,29 @@ export interface Product {
   /**
    * Conteúdo exclusivo para clientes que compraram. Adicione documentação do produto, arquivos, guias e materiais bônus. Suporte a Markdown.
    */
-  content?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Arquive produtos que não estão mais disponíveis para venda. Produtos arquivados não aparecem na loja, mas permanecem acessíveis para clientes existentes.
+   */
+  isArchived?: boolean | null;
+  /**
+   * Se marcado, este produto não será exibido na vitrine pública.
+   */
+  isPrivate?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -450,14 +486,16 @@ export interface CategoriesSelect<T extends boolean = true> {
 export interface ProductsSelect<T extends boolean = true> {
   tenant?: T;
   name?: T;
-  price?: T;
   description?: T;
+  price?: T;
   category?: T;
   tags?: T;
   image?: T;
   cover?: T;
   refundPolicy?: T;
   content?: T;
+  isArchived?: T;
+  isPrivate?: T;
   updatedAt?: T;
   createdAt?: T;
 }

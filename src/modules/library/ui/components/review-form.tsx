@@ -158,3 +158,25 @@ const ReviewForm = ({ productId, initalData }: ReviewFormProps) => {
 };
 
 export default ReviewForm;
+
+export const ReviewFormSkeleton = () => {
+  return (
+    <div className="flex flex-col gap-y-4">
+      <p className="font-medium">Escreva uma resenha</p>
+
+      <StarPicker disabled value={5} />
+
+      <Textarea placeholder="Escreva sua resenha aqui..." disabled />
+
+      <Button
+        variant="elevated"
+        disabled
+        type="button"
+        size="lg"
+        className="bg-black text-white hover:bg-pink-400 hover:text-primary w-fit"
+      >
+        Enviar Resenha
+      </Button>
+    </div>
+  );
+};

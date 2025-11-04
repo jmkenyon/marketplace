@@ -5,7 +5,7 @@ export const Tenants: CollectionConfig = {
   slug: "tenants",
   labels: {
     singular: "Loja",
-    plural: "Lojas",
+    plural: "Loja",
   },
   access: {
     create: ({ req }) => isSuperAdmin(req.user),

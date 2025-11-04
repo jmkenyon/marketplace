@@ -83,6 +83,11 @@ export const checkoutRouter = createTRPCRouter({
                 equals: input.tenantSlug,
               },
             },
+            {
+              isArchived: {
+                not_equals: true,
+              },
+            },
           ],
         },
       });
@@ -147,23 +152,25 @@ export const checkoutRouter = createTRPCRouter({
         totalAmount * (PLATFORM_FEE_PERCENTAGE / 100)
       );
 
-      const checkout = await stripe.checkout.sessions.create({
-        customer_email: ctx.session.user.email,
-        success_url: `${process.env.NEXT_PUBLIC_APP_URL}/lojas/${input.tenantSlug}/checkout?success=true`,
-        cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/lojas/${input.tenantSlug}/checkout?cancel=true`,
-        mode: "payment",
-        line_items: lineItems,
-        locale: "pt-BR",
-        invoice_creation: {
-          enabled: true,
-        },
-        metadata: {
-          userId: ctx.session.user.id,
-        } as CheckoutSessionMetadata,
-        payment_intent_data: {
-          application_fee_amount: platformFeeAmount,
+      const checkout = await stripe.checkout.sessions.create(
+        {
+          customer_email: ctx.session.user.email,
+          success_url: `${process.env.NEXT_PUBLIC_APP_URL}/lojas/${input.tenantSlug}/checkout?success=true`,
+          cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/lojas/${input.tenantSlug}/checkout?cancel=true`,
+          mode: "payment",
+          line_items: lineItems,
+          locale: "pt-BR",
+          invoice_creation: {
+            enabled: true,
           },
-        }, {
+          metadata: {
+            userId: ctx.session.user.id,
+          } as CheckoutSessionMetadata,
+          payment_intent_data: {
+            application_fee_amount: platformFeeAmount,
+          },
+        },
+        {
           stripeAccount: tenant.stripeAccountId,
         }
       );
@@ -189,9 +196,18 @@ export const checkoutRouter = createTRPCRouter({
         collection: "products",
         depth: 2,
         where: {
-          id: {
-            in: input.ids,
-          },
+          and: [
+            {
+              id: {
+                in: input.ids,
+              },
+            },
+            {
+              isArchived: {
+                not_equals: true,
+              },
+            },
+          ],
         },
       });
 

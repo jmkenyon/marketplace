@@ -1,12 +1,11 @@
 // storage-adapter-import-placeholder
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { payloadCloudPlugin } from "@payloadcms/payload-cloud";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { lexicalEditor, UploadFeature } from "@payloadcms/richtext-lexical";
 import path from "path";
 import { buildConfig } from "payload";
 import { multiTenantPlugin } from "@payloadcms/plugin-multi-tenant";
-import {pt } from "@payloadcms/translations/languages/pt";
-
+import { pt } from "@payloadcms/translations/languages/pt";
 
 import { fileURLToPath } from "url";
 import sharp from "sharp";
@@ -32,7 +31,7 @@ export default buildConfig({
     },
     components: {
       beforeNavLinks: ["@/components/stripe-verify#StripeVerify"],
-    }
+    },
   },
   collections: [
     Users,
@@ -68,6 +67,6 @@ export default buildConfig({
     // storage-adapter-placeholder
   ],
   i18n: {
-    supportedLanguages: {pt},
+    supportedLanguages: { pt },
   },
 });
