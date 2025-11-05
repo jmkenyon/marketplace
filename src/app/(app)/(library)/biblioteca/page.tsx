@@ -5,6 +5,8 @@ import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { redirect } from "next/navigation";
 import React from "react";
 
+export const dynamic = 'force-dynamic'
+
 const page = async () => {
   const session = await caller.auth.session();
 

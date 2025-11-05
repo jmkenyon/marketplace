@@ -7,6 +7,8 @@ import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { redirect } from "next/navigation";
 import React, { Suspense } from "react";
 
+export const dynamic = 'force-dynamic'
+
 interface Props {
   params: Promise<{
     productId: string;

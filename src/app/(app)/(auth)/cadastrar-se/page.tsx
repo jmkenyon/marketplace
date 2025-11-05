@@ -3,7 +3,9 @@ import { caller } from '@/trpc/server'
 import { redirect } from 'next/navigation'
 import React from 'react'
 
-const page = async () => {
+export const dynamic = 'force-dynamic'
+
+const Page = async () => {
     const session = await caller.auth.session()
   
     if (session.user) {
@@ -14,4 +16,4 @@ const page = async () => {
   )
 }
 
-export default page
+export default Page
