@@ -19,6 +19,7 @@
     "@payloadcms/payload-cloud": "^3.59.1",
     "@payloadcms/plugin-multi-tenant": "3.59.1",
     "@payloadcms/richtext-lexical": "^3.59.1",
+    "@payloadcms/storage-vercel-blob": "3.59.1",
     "@payloadcms/translations": "^3.62.0",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",
