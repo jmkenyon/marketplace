@@ -33,7 +33,7 @@ export const SearchInput = ({ disabled, defaultValue, onChange }: Props) => {
         <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-neutral-500" />
         <Input
           className="pl-8"
-          placeholder="Search products..."
+          placeholder="Buscar produtos..."
           disabled={disabled}
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
