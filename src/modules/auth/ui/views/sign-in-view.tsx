@@ -71,7 +71,7 @@ export const SignInView = () => {
                 <span
                   className={cn("text-2xl font-sefmibold", poppins.className)}
                 >
-                  Learnly
+                  Cryptverse
                 </span>
               </Link>
               <Button
@@ -86,7 +86,7 @@ export const SignInView = () => {
               </Button>
             </div>
             <h1 className="text-4xl font-medium">
-              Bem-vindo de volta à Learnly
+              Bem-vindo de volta à Cryptverse
             </h1>
 
             <FormField

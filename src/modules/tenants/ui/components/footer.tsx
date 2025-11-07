@@ -16,7 +16,7 @@ export const Footer = () => {
         <p>Feito com</p>
         <Link href={process.env.NEXT_PUBLIC_APP_URL!}>
           <span className={cn("text-xl font-semibold", poppins.className)}>
-            Learnly
+          Cryptverse
           </span>
         </Link>
       </div>

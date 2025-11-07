@@ -1,6 +1,6 @@
-import type { CollectionConfig } from 'payload'
-import { tenantsArrayField} from '@payloadcms/plugin-multi-tenant/fields'
-import { isSuperAdmin } from '@/lib/access'
+import type { CollectionConfig } from "payload";
+import { tenantsArrayField } from "@payloadcms/plugin-multi-tenant/fields";
+import { isSuperAdmin } from "@/lib/access";
 
 const defaultTenantField = tenantsArrayField({
   tenantsArrayFieldName: "tenants",
@@ -8,43 +8,51 @@ const defaultTenantField = tenantsArrayField({
   tenantsArrayTenantFieldName: "tenant",
   arrayFieldAccess: {
     read: () => true,
-    create: ({req }) => isSuperAdmin(req.user),
-    update: ({req }) => isSuperAdmin(req.user),
+    create: ({ req }) => isSuperAdmin(req.user),
+    update: ({ req }) => isSuperAdmin(req.user),
   },
   tenantFieldAccess: {
     read: () => true,
-    create: ({req }) => isSuperAdmin(req.user),
-    update: ({req }) => isSuperAdmin(req.user),
+    create: ({ req }) => isSuperAdmin(req.user),
+    update: ({ req }) => isSuperAdmin(req.user),
   },
-})  
+});
 
 export const Users: CollectionConfig = {
-  slug: 'users',
+  slug: "users",
   access: {
     read: () => true,
-    create: ({req}) => isSuperAdmin(req.user),
-    delete: ({req}) => isSuperAdmin(req.user),
-    update: ({req, id}) => {
-      if (isSuperAdmin(req.user)) return true
-      if (req.user?.id === id) return true
-      return false
+    create: ({ req }) => isSuperAdmin(req.user),
+    delete: ({ req }) => isSuperAdmin(req.user),
+    update: ({ req, id }) => {
+      if (isSuperAdmin(req.user)) return true;
+      if (req.user?.id === id) return true;
+      return false;
     },
   },
   admin: {
-    useAsTitle: 'email',
-    hidden: ({user}) => !isSuperAdmin(user),
+    useAsTitle: "email",
+    hidden: ({ user }) => !isSuperAdmin(user),
   },
-  auth: true,
+  auth: {
+    cookies: {
+      ...(process.env.NODE_ENV !== "development" && {
+        sameSite: "None",
+        domain: process.env.NEXT_PUBLIC_ROOT_DOMAIN,
+        secure: true,
+      }),
+    },
+  },
   fields: [
-     {
+    {
       name: "username",
       required: true,
       unique: true,
       type: "text",
-     },
-     {
+    },
+    {
       admin: {
-        position: "sidebar"
+        position: "sidebar",
       },
       name: "roles",
       type: "select",
@@ -52,15 +60,15 @@ export const Users: CollectionConfig = {
       hasMany: true,
       options: ["super-admin", "user"],
       access: {
-        update: ({req}) => isSuperAdmin(req.user),
-      }
-     },
-     {
+        update: ({ req }) => isSuperAdmin(req.user),
+      },
+    },
+    {
       ...defaultTenantField,
       admin: {
         ...(defaultTenantField.admin || {}),
         position: "sidebar",
-     }
-    }
+      },
+    },
   ],
-}
+};

@@ -76,7 +76,7 @@ export const SignUpView = () => {
                 <span
                   className={cn("text-2xl font-sefmibold", poppins.className)}
                 >
-                  Learnly
+                  Cryptverse
                 </span>
               </Link>
               <Button
@@ -91,7 +91,7 @@ export const SignUpView = () => {
               </Button>
             </div>
             <h1 className="text-4xl font-medium">
-              Milhares de criadores já faturam com a Learnly — venha com a
+              Milhares de criadores já faturam com a Cryptverse — venha com a
               gente.
             </h1>
             <FormField
@@ -107,7 +107,7 @@ export const SignUpView = () => {
                     className={cn("hidden", showPreview && "block")}
                   >
                     Sua loja estará disponível at&nbsp;
-                    <strong>{username}</strong>.learnly.com.br
+                    <strong>{username}</strong>.cryptverse.io
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
