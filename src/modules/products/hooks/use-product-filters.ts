@@ -4,6 +4,11 @@ const sortValues = ["selecionado", "em alta", "novo"] as const;
 
 
 const params = {
+  search: parseAsString
+  .withOptions({
+    clearOnDefault: true,
+  })
+  .withDefault(""),
   sort: parseAsStringLiteral(sortValues).withDefault("selecionado"),
   minPrice: parseAsString.withOptions({
     clearOnDefault: true,
