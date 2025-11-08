@@ -10,8 +10,9 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Formara",
-  description: "Crie, publique e venda seu conteúdo digital direto ao público. Formara é simples, segura e 100% brasileira.",
+  title: "Formara – O Marketplace Digital dos Criadores Brasileiros",
+  description:
+    "Crie, publique e venda seu conteúdo digital direto ao público. Formara é simples, segura e 100% brasileira.",
 };
 
 export default function RootLayout({
