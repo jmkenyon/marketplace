@@ -48,8 +48,8 @@ const seed = async () => {
   await payload.create({
     collection: "users",
     data: {
-      email: "oi@formora.com.br",
-      password: "Formora123!",
+      email: "oi@formara.com.br",
+      password: "Formara123!",
       roles: ["super-admin"],
       username: "admin",
       tenants: [

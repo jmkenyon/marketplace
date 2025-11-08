@@ -37,11 +37,11 @@ const NavbarItem = ({ href, children, isActive }: NavbarItemProps) => {
 };
 
 const navbarItems = [
-  { href: "/", children: "Home" },
-  { href: "/sobre", children: "Sobre Nós" },
+  { href: "/", children: "Início" },
+  // { href: "/sobre", children: "Sobre Nós" },
   // {href: '/funcionalidades', children: "Funcionalidades"},
   // { href: "/planos", children: "Planos" },
-  { href: "/contato", children: "Contato" },
+  // { href: "/contato", children: "Contato" },
 ];
 
 const Navbar = () => {
@@ -55,7 +55,7 @@ const Navbar = () => {
     <nav className="h-20 flex border-b justify-between font-medium bg-white">
       <Link href="/" className="pl-6 flex items-center">
         <span className={cn("text-5xl font-semibold", poppins.className)}>
-        Formara
+          Formara
         </span>
       </Link>
 
