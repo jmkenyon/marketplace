@@ -71,7 +71,7 @@ export const SignInView = () => {
                 <span
                   className={cn("text-2xl font-sefmibold", poppins.className)}
                 >
-                  Cryptverse
+                  Formara
                 </span>
               </Link>
               <Button
@@ -86,7 +86,7 @@ export const SignInView = () => {
               </Button>
             </div>
             <h1 className="text-4xl font-medium">
-              Bem-vindo de volta à Cryptverse
+              Bem-vindo de volta à Formara
             </h1>
 
             <FormField
