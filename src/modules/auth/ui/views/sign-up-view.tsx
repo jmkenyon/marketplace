@@ -24,6 +24,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {toast } from "sonner";
 import { useRouter } from "next/navigation";
 
+
 const poppins = Poppins({ subsets: ["latin"], weight: ["700"] });
 
 export const SignUpView = () => {
