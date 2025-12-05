@@ -20,9 +20,9 @@ const categories = [
     subcategories: [],
   },
   {
-    name: "Software Development",
+    name: "Desenvolvimento",
     color: "#8A7FF9", 
-    slug: "software-development",
+    slug: "desenvolvimento",
     subcategories: [],
   },
   {
